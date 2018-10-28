@@ -1,0 +1,64 @@
+<mat-card class="margin-bottom-15">
+  <mat-card-title>
+    Add/Edit post
+  </mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="basicForm">
+      <div class="form-group">
+        <label for="id" [hidden]="!editMode">Id</label>
+        <input type="text" class="form-control" formControlName="id" id="id"  [hidden]="!editMode">
+      </div>
+
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" id="title" formControlName="title" required>
+      </div>
+      <small
+        *ngIf="basicForm.controls['title'].hasError('required') && basicForm.controls['title'].touched"
+        class="form-error-msg">Required!
+      </small>
+
+      <div class="form-group">
+        <label for="content">Content</label>
+        <input type="text" class="form-control" formControlName="content" id="content">
+      </div>
+      <small
+        *ngIf="basicForm.controls['content'].hasError('required') && basicForm.controls['content'].touched"
+        class="form-error-msg">Required!
+      </small>
+
+      <div>
+        <button (click)="addNew()" class="btn btn-success">New</button>
+        <button type="submit" [disabled]="basicForm.invalid" (click)="save()" class="btn btn-success margin-left-10">Save</button>
+      </div>
+    </form>
+  </mat-card-content>
+
+</mat-card>
+
+<mat-card>
+  <mat-card-content>
+    <table class="table">
+      <thead class="thead-dark">
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Title</th>
+        <th scope="col">Content</th>
+        <th scope="col"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let post of posts">
+        <td>{{ post.id }}</td>
+        <td>{{ post.title }}</td>
+        <td>{{ post.content }}</td>
+        <td>
+          <button mat-button mat-raised-button color="primary" (click)="editPost(post)">Edit</button>
+          <button mat-button mat-raised-button color="warn" (click)="deletePost(post)" class="margin-left-10">Delete
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </mat-card-content>
+</mat-card>
